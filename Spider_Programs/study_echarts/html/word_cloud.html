@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>词云</title>
+    <!--引入echarts.js 引入不了 只能引外边链接的了-->
+    <!--<script src="../js/echarts-all-3.js" type="text/javascript"></script>-->
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
+    <!--引入词云图的js 必要文件-->
+    <script src="../js/echarts-wordcloud/dist/echarts-wordcloud.min.js"></script>
+</head>
+<body>
+<!--定义画布-->
+<div id="main" style="height: 400px;width: 600px"></div>
+
+</body>
+<script type="text/javascript">
+    //进行echarts的初始化，以及定位画布
+    var mychart = echarts.init(document.getElementById('main'));
+    var jsonlist = [];
+    jsonlist.push(
+        {
+            'name': '花鸟市场',
+            'value': 1446
+        },
+        {
+            'name': '汽车',
+            'value': 928
+        },
+        {
+            'name': '视频',
+            'value': 906
+        },
+        {
+            'name': 'Lover Boy 88',
+            'value': 514
+        },
+        {
+            'name': '动漫',
+            'value': 486
+        },
+        {
+            'name': '音乐',
+            'value': 999
+        },
+        {
+            'name': '直播',
+            'value': 163
+        },
+        {
+            'name': '广播电台',
+            'value': 86
+        },
+        {
+            'name': '咨讯',
+            'value': 1437
+        },
+        {
+            'name': '商业财经',
+            'value': 422
+        },
+        {
+            'name': '娱乐八卦',
+            'value': 353
+        },
+        {
+            'name': '网络奇闻',
+            'value': 15
+        },
+        {
+            'name': '旅游景点',
+            'value': 438
+        },
+        {
+            'name': '景点类型',
+            'value': 957
+        },
+        {
+            'name': '关注景点',
+            'value': 611
+        },
+        {
+            'name': '旅游网站偏好',
+            'value': 512
+        },
+        {
+            'name': '出国游',
+            'value': 382
+        },
+        {
+            'name': '交通票务',
+            'value': 312
+        },
+        {
+            'name': '健身房运动',
+            'value': 77
+        },
+        {
+            'name': '运动健身',
+            'value': 78
+        },
+        {
+            'name': '家庭健身',
+            'value': 36
+        },
+        {
+            'name': '真人cs',
+            'value': 1
+        },
+        {
+            'name': '直播2',
+            'value': 16
+        },
+        {
+            'name': '广播电台2',
+            'value': 8
+        },
+        {
+            'name': '咨讯2',
+            'value': 143
+        },
+        {
+            'name': '商业财经2',
+            'value': 42
+        },
+        {
+            'name': '娱乐八卦2',
+            'value': 35
+        },
+        {
+            'name': '网络奇闻2',
+            'value': 1
+        },
+        {
+            'name': '旅游景点2',
+            'value': 43
+        },
+        {
+            'name': '景点类型2',
+            'value': 95
+        },
+        {
+            'name': '关注景点2',
+            'value': 61
+        },
+        {
+            'name': '旅游网站偏好2',
+            'value': 51
+        },
+        {
+            'name': '出国游2',
+            'value': 38
+        },
+        {
+            'name': '交通票务2',
+            'value': 31
+        },
+        {
+            'name': '健身房运动2',
+            'value': 772
+        },
+        {
+            'name': '运动健身3',
+            'value': 781
+        },
+        {
+            'name': '家庭健身2',
+            'value': 362
+        },
+        {
+            'name': '真人cs2',
+            'value': 12
+        }
+    );
+    //人像的base64编码
+    image = "data:image/png;" +
+        "base64," +
+        "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";
+    var maskImage = new Image();
+    maskImage.src = image;
+    //配置项和配置数据
+    var option = {
+        title: {
+            text: '词云图',
+            left: 'center'
+        },
+        series: [
+            {
+                maskImage:maskImage,
+                //指定类型为词云图
+                type: 'wordCloud',
+                //设置字符大小范围
+                sizeRange: [6, 66],
+                //设置字符倾斜角度范围
+                rotationRange: [-45, 90],
+                textStyle: {
+                    normal: {
+                        color: function () {
+                            return 'rgb(' + [
+                                Math.round(Math.random() * 160),
+                                Math.round(Math.random() * 160),
+                                Math.round(Math.random() * 160)
+                            ].join(',') + ')';
+                        }
+                    }
+                },
+                //调用数据
+                data: jsonlist
+            }
+        ]
+    };
+    //调用设置选项
+    maskImage.onload = function(){
+        mychart.setOption(option);
+    }
+</script>
+</html>

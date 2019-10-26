@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>饼图</title>
+    <!--引入echarts.js 引入不了 只能引外边链接的了-->
+    <script src="../js/echarts-all-3.js" type="text/javascript"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
+</head>
+<body>
+    <!--定义画布-->
+    <div id="main" style="height: 400px;width: 600px"></div>
+
+</body>
+<script type="text/javascript">
+        //进行echarts的初始化，以及定位画布
+        var mychart =  echarts.init(document.getElementById('main'));
+        //配置项和配置数据
+        var option = {
+            //配置折线图的配置项
+            title:{
+                text:'饼图'
+            },
+            tooltip:{},
+            legend:{
+                data:['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+            },
+            series:[
+                {
+                    type:'pie',
+                    radius:'55%',
+                    center:['50%','50%'],
+                    data:[
+                        {name:'直接访问',value:335},
+                        {name:'邮件营销',value:720},
+                        {name:'联盟广告',value:135},
+                        {name:'视频广告',value:500},
+                        {name:'搜索引擎',value:235}
+                    ],
+                    //南丁格尔图形状
+                    roseType:'radius'
+                }
+            ]
+
+        };
+        mychart.setOption(option)
+    </script>
+</html>

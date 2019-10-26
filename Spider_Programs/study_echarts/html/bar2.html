@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>柱形图</title>
+    <!--引入echarts.js 引入不了 只能引外边链接的了-->
+    <script src="../js/echarts-all-3.js" type="text/javascript"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
+</head>
+<body>
+    <!--定义画布-->
+    <div id="main" style="height: 400px;width: 600px"></div>
+
+</body>
+<script type="text/javascript">
+        //进行echarts的初始化，以及定位画布
+        var mychart =  echarts.init(document.getElementById('main'));
+        //配置项和配置数据
+        var option = {
+            // 标题
+            title:{
+                text:'echarts入门示例'
+            },
+            // 图例
+            legend:{
+                data:['销量1','销量2','销量3']
+            },
+            // x轴
+            xAxis:{
+                data:['衬衫','羊毛衫','雪纺衫','裤子','高跟鞋','袜子']
+            },
+            // y轴 使用默认配置
+            yAxis:{},
+            // 配置柱形图数据
+            series:[
+                {
+                    name:'销量1',
+                    //柱形图
+                    type:'bar',
+                    data:[5,20,36,10,10,20]
+                },
+                {
+                    name:'销量2',
+                    //柱形图
+                    type:'bar',
+                    data:[1,120,6,20,10,190]
+                },
+                {
+                    name:'销量3',
+                    //柱形图
+                    type:'bar',
+                    data:[10,220,36,5,20,20]
+                },
+            ]
+        };
+        mychart.setOption(option)
+    </script>
+</html>
